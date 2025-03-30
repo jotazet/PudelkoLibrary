@@ -1,6 +1,6 @@
 ﻿namespace PudelkoLibrary
 {
-    public sealed class Pudelko
+    public sealed class Pudelko : IFormattable
     {
         public enum UnitOfMeasure
         {
@@ -59,7 +59,23 @@
                 case UnitOfMeasure.meter:
                     return value;
                 default:
-                    throw new TypeLoadException();
+                    throw new FormatException();
+            }
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (format == "cm")
+            {
+                return $"{a * 100} cm × {b * 100} cm × {c * 100} cm";
+            }
+            else if (format == "mm")
+            {
+                return $"{a * 1000} mm × {b * 1000} mm × {c * 1000} mm";
+            }
+            else
+            {
+                return $"{a} m × {b} m × {c} m";
             }
         }
     }
