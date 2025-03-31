@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PudelkoLibrary;
+using static PudelkoLibrary.Pudelko;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
