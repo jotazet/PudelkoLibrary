@@ -21,35 +21,17 @@ namespace PudelkoLibrary
 
         public Pudelko(double a = 0.1, double b = 0.1, double c = 0.1, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
-            if (unit == UnitOfMeasure.meter)
-            {
-                a = ConvertToMeters(a, unit);
-                b = ConvertToMeters(b, unit);
-                c = ConvertToMeters(c, unit);
-            }
-            else if (unit == UnitOfMeasure.centimeter)
-            {
-                a = ConvertToMeters(a, unit);
-                b = ConvertToMeters(b, unit);
-                c = ConvertToMeters(c, unit);
-            }
-            else if (unit == UnitOfMeasure.milimeter)
-            {
-                a = ConvertToMeters(a, unit);
-                b = ConvertToMeters(b, unit);
-                c = ConvertToMeters(c, unit);
-            }
+            
+            this.a = Math.Floor(ConvertToMeters(a, unit) * 1000) / 1000;
+            this.b = Math.Floor(ConvertToMeters(b, unit) * 1000) / 1000;
+            this.c = Math.Floor(ConvertToMeters(c, unit) * 1000) / 1000;
 
-            if (a <= 0 || b <= 0 || c <= 0 || a > 10 || b > 10 || c > 10)
+            if (this.a <= 0 || this.b <= 0 || this.c <= 0 || this.a > 10 || this.b > 10 || this.c > 10)
             {
                 throw new ArgumentOutOfRangeException();
             }
-
-            this.a = a;
-            this.b = b;
-            this.c = c;
         }
-        
+
         private double ConvertToMeters(double value, UnitOfMeasure unit)
         {
             switch (unit)
@@ -63,6 +45,11 @@ namespace PudelkoLibrary
                 default:
                     throw new FormatException();
             }
+        }
+
+        public override string ToString()
+        {
+            return ToString("m", null);
         }
 
         public string ToString(string format, IFormatProvider formatProvider = null)
