@@ -19,14 +19,15 @@ namespace PudelkoLibrary
         public double B => b;
         public double C => c;
 
-        public Pudelko(double a = 0.1, double b = 0.1, double c = 0.1, UnitOfMeasure unit = UnitOfMeasure.meter)
+        // Add nullable properties for a, b, c to check is user provide values
+        public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
-            
-            this.a = Math.Floor(ConvertToMeters(a, unit) * 1000) / 1000;
-            this.b = Math.Floor(ConvertToMeters(b, unit) * 1000) / 1000;
-            this.c = Math.Floor(ConvertToMeters(c, unit) * 1000) / 1000;
+            this.a = a.HasValue ? Math.Floor(ConvertToMeters(a.Value, unit) * 1000) / 1000 : 0.1;
+            this.b = b.HasValue ? Math.Floor(ConvertToMeters(b.Value, unit) * 1000) / 1000 : 0.1;
+            this.c = c.HasValue ? Math.Floor(ConvertToMeters(c.Value, unit) * 1000) / 1000 : 0.1;
 
-            if (this.a <= 0 || this.b <= 0 || this.c <= 0 || this.a > 10 || this.b > 10 || this.c > 10)
+
+            if (this.a < 0.001 || this.b < 0.001 || this.c < 0.001 || this.a > 10 || this.b > 10 || this.c > 10)
             {
                 throw new ArgumentOutOfRangeException();
             }
