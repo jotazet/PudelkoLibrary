@@ -108,6 +108,14 @@ namespace PudelkoLibrary
             return hash;
         }
 
+        public static Pudelko operator +(Pudelko p1, Pudelko p2)
+        {
+            return new Pudelko(
+                Math.Max(p1.a, p2.a),
+                Math.Max(p1.b, p2.b),
+                Math.Max(p1.c, p2.c));
+        }
+
         public static bool operator ==(Pudelko left, Pudelko right)
         {
             if (ReferenceEquals(left, null)) return ReferenceEquals(right, null);

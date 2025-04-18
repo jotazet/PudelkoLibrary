@@ -1,10 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PudelkoLibrary;
+﻿using PudelkoLibrary;
 using static PudelkoLibrary.Pudelko;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
 
 namespace PudelkoUnitTests
 {
@@ -579,7 +575,57 @@ namespace PudelkoUnitTests
         #endregion
 
         #region Operators overloading ===========================
-        // ToDo
+        [TestMethod, TestCategory("Operators")]
+        [DataRow(1, 2.543, 3.1)]
+        [DataRow(1.5, 2.5, 9.1)]
+        [DataRow(5, 4.53, 1)]
+        public void EqualsOperator_True(double a, double b, double c)
+        {
+            var p1 = new Pudelko(a, b, c);
+            var p2 = new Pudelko(a, b, c);
+            Assert.IsTrue(p1 == p2);
+        }
+        [TestMethod, TestCategory("Operators")]
+        [DataRow(1, 2.543, 3.1)]
+        [DataRow(1.5, 2.5, 9.1)]
+        [DataRow(5, 4.53, 1)]
+        public void NotEqualsOperator_True(double a, double b, double c)
+        {
+            var p1 = new Pudelko(a, b, c);
+            var p2 = new Pudelko(a, b, c + 0.1);
+            Assert.IsTrue(p1 != p2);
+        }
+
+        [TestMethod, TestCategory("Operators")]
+        [DataRow(1, 2.543, 3.1)]
+        [DataRow(1.5, 2.5, 9.1)]
+        [DataRow(5, 4.53, 1)]
+        public void Operators_AddingTwoIdenticalCubes_ReturnsCorrectDimensions(double a, double b, double c)
+        {
+            var p1 = new Pudelko(a, b, c);
+            var p2 = new Pudelko(a, b, c);
+            var actual = p1 + p2;
+            Assert.AreEqual(Math.Max(p1.A, p2.A), actual.A);
+            Assert.AreEqual(Math.Max(p1.B, p2.B), actual.B);
+            Assert.AreEqual(Math.Max(p1.C, p2.C), actual.C);
+        }
+
+        [TestMethod, TestCategory("Operators")]
+        [DataRow(1, 2.543, 3.1)]
+        [DataRow(1.5, 2.5, 9.1)]
+        [DataRow(5, 4.53, 1)]
+        public void Operators_AddingTwoDifferentCubes_ReturnsCorrectDimensions(double a, double b, double c)
+        {
+            var p1 = new Pudelko(a, b, c);
+            var p2 = new Pudelko(a + 0.1, b + 0.1, c + 0.1);
+            var actual = p1 + p2;
+            Assert.AreEqual(Math.Max(p1.A, p2.A), actual.A);
+            Assert.AreEqual(Math.Max(p1.B, p2.B), actual.B);
+            Assert.AreEqual(Math.Max(p1.C, p2.C), actual.C);
+        }
+
+
+
         #endregion
 
         #region Conversions =====================================
