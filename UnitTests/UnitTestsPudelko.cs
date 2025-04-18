@@ -448,12 +448,105 @@ namespace PudelkoUnitTests
 
 
         #region Pole, Objętość ===================================
-        // ToDo
+        [TestMethod, TestCategory("Objętość")]
+        public void Objetosc_Test()
+        {
+            var p = new Pudelko(1, 2.1, 3.231);
+            double expectedVolume = 1 * 2.1 * 3.231;
+            Assert.AreEqual(expectedVolume, p.Objetosc, delta: accuracy);
+        }
 
+        [TestMethod, TestCategory("Objętość")]
+        public void Objetosc_Property_RoundsCorrectly_Down()
+        {
+            var p = new Pudelko(1.0001, 2.54387, 3.1005);
+            double expectedVolume = Math.Round(1 * 2.543 * 3.1, 9);
+            Assert.AreEqual(expectedVolume, p.Objetosc, delta: accuracy);
+        }
+
+        [TestMethod, TestCategory("Objętość")]
+        public void Objetosc_Property_RoundsCorrectly_Up()
+        {
+            var p = new Pudelko(1.0009, 2.54387, 3.1005);
+
+            double a = Math.Floor(1.0009 * 1000) / 1000;
+            double b = Math.Floor(2.54387 * 1000) / 1000;
+            double c = Math.Floor(3.1005 * 1000) / 1000;
+
+            double expectedVolume = Math.Round(a * b * c, 9);
+            Assert.AreEqual(expectedVolume, p.Objetosc, delta: accuracy);
+        }
+
+        [TestMethod, TestCategory("Pole")]
+        public void Pole_Property_RoundsCorrectly_Up()
+        {
+            var p = new Pudelko(1.0009, 2.54387, 3.1005);
+
+            double a = Math.Floor(1.0009 * 1000) / 1000;
+            double b = Math.Floor(2.54387 * 1000) / 1000;
+            double c = Math.Floor(3.1005 * 1000) / 1000;
+
+            double expectedArea = Math.Round(2 * (a * b + b * c + c * a), 6);
+            Assert.AreEqual(expectedArea, p.Pole, delta: accuracy);
+        }
+
+        [TestMethod, TestCategory("Pole")]
+        public void Pole_Property_RoundsCorrectly_Down()
+        {
+            var p = new Pudelko(1.0001, 2.54387, 3.1005);
+            double expectedArea = Math.Round(2 * (1 * 2.543 + 2.543 * 3.1 + 3.1 * 1), 6);
+            Assert.AreEqual(expectedArea, p.Pole, delta: accuracy);
+        }
         #endregion
 
         #region Equals ===========================================
-        // ToDo
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_SameValues_True()
+        {
+            var p1 = new Pudelko(1, 2.543, 3.1);
+            var p2 = new Pudelko(1, 2.543, 3.1);
+            Assert.IsTrue(p1.Equals(p2));
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_DifferentValues_False()
+        {
+            var p1 = new Pudelko(1, 2.543, 3.1);
+            var p2 = new Pudelko(1, 2.543, 3.2);
+            Assert.IsFalse(p1.Equals(p2));
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_DifferentTypes_False()
+        {
+            var p = new Pudelko(1, 2.543, 3.1);
+            var s = "test";
+            Assert.IsFalse(p.Equals(s));
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_DiffrentUnits_True()
+        {
+            var p1 = new Pudelko(1000, 2543, 3100, UnitOfMeasure.milimeter);
+            var p2 = new Pudelko(1, 2.543, 3.1);
+            Assert.IsTrue(p1.Equals(p2));
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_DiffrentUnits_False()
+        {
+            var p1 = new Pudelko(1000, 2543, 3100, UnitOfMeasure.milimeter);
+            var p2 = new Pudelko(1, 2.543, 3.2);
+            Assert.IsFalse(p1.Equals(p2));
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_IfObjIsPudelko_True()
+        {
+            var p1 = new Pudelko(1, 2.543, 3.1);
+            object p2 = new Pudelko(1, 2.543, 3.1);
+            Assert.IsTrue(p1.Equals(p2));
+        }
         #endregion
 
         #region Operators overloading ===========================
